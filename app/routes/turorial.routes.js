@@ -9,13 +9,13 @@
     router.post("/", tutorials.create);
   
     // Retrieve all Tutorials
-    router.get("/", [authJwt.verifyToken], tutorials.findAll);
+    router.get("/", tutorials.findAll);
   
     // Retrieve all published Tutorials
-    router.get("/published", [authJwt.verifyToken], tutorials.findAllPublished);
+    router.get("/published", tutorials.findAllPublished);
   
     // Retrieve a single Tutorial with id
-    router.get("/:id", [authJwt.verifyToken], tutorials.findOne);
+    router.get("/:id", tutorials.findOne);
   
     // Update a Tutorial with id
     router.put("/:id", tutorials.update);
@@ -24,6 +24,6 @@
     router.delete("/:id", tutorials.delete);
   
     // Delete all Tutorials
-    router.delete("/", [authJwt.verifyToken], tutorials.deleteAll);
+    router.delete("/", tutorials.deleteAll);
 
     module.exports = router;
