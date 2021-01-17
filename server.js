@@ -30,7 +30,7 @@ db.sequelize.sync({force: true}).then(() => {
 function initial() {
   Materiel.create({
     id: null,
-    idBadge: 0000000,
+    idBadge: "0000000",
     dateControle: null,
     newDateControle: null,
     nomMateriel: "test",
