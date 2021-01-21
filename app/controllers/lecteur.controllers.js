@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 
 exports.findAll = (req, res) => {
     const nomBatiment = req.query.nomBatiment;
-    var condition = nomBatiment ? { nomBatiment: { [Op.like]: `%${login}%` } } : null;
+    var condition = nomBatiment ? { nomBatiment: { [Op.like]: `%${nomBatiment}%` } } : null;
   
     Batiment.findAll({ where: condition })
       .then(data => {

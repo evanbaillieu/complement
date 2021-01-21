@@ -17,40 +17,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = require("./app/models");
-const Role = db.role;
-const Materiel = db.materiel;
-Date.now();
-
-db.sequelize.sync({force: true}).then(() => {
-  console.log('Drop and Resync Db');
-  initial();
-});
+db.sequelize.sync()
 
 
-function initial() {
-  Materiel.create({
-    id: null,
-    idBadge: "0000000",
-    dateControle: null,
-    newDateControle: null,
-    nomMateriel: "test",
-    idType: null
-  })
-  Role.create({
-    id: 1,
-    name: "user"
-  });
- 
-  Role.create({
-    id: 2,
-    name: "moderator"
-  });
- 
-  Role.create({
-    id: 3,
-    name: "admin"
-  });
-}
 
 // simple route
 app.get("/", (req, res) => {

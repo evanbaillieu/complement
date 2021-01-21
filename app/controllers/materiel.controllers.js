@@ -130,17 +130,4 @@ exports.deleteAll = (req, res) => {
       });
   };
 
-  exports.findbynomMateriel = (req, res) => {
-    const nomMateriel = req.params.nomMateriel
-
-    Materiel.findOne({where: { nomMateriel: nomMateriel} })
-    .then(materiel => {
-        res.send(materiel)
-    }).catch(err =>{
-      res.status(500).send({
-        message: err.message || "non trouver"
-      })
-    })
-  }
-
  

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import MaterielDataService from "../services/materiel.service";
 import TypeDataService from "../services/type.service"
+import LocalisationDataService from "../services/localisation.service"
+import SalleDataService from "../services/salle.service"
 import { Link } from "react-router-dom";
 
 export default class MaterielList extends Component {
@@ -10,12 +12,17 @@ export default class MaterielList extends Component {
     this.refreshList = this.refreshList.bind(this);
     this.setActiveMateriel = this.setActiveMateriel.bind(this);
     this.removeAllMateriels = this.removeAllMateriels.bind(this);
+    this.retrieveLocalisation = this.retrieveLocalisation.bind(this);
+    this.retrieveType = this.retrieveType.bind(this);
+    this.retrieveSalle = this.retrieveSalle.bind(this);
 
     this.state = {
       materiels: [],
       currentMateriel: null,
       currentIndex: -1,
-      currentType: null
+      currentType: null,
+      currentLocalisation: null,
+      currentSalle: null
     };
   }
 
@@ -37,7 +44,7 @@ export default class MaterielList extends Component {
   }
 
   refreshList() {
-    this.retrieveTutorials();
+    this.retrieveMateriels();
     this.setState({
       currentMateriel: null,
       currentIndex: -1
@@ -49,13 +56,49 @@ export default class MaterielList extends Component {
       currentMateriel: materiel,
       currentIndex: index
     });
-    
-
-    TypeDataService.getbyid(materiel.id)
+    this.retrieveType(materiel.idType)
+    LocalisationDataService.findByIdMaterial(materiel.id)
     .then(response => {
-      this.state({
-        currentType: response
+      console.log(response.data)
+       this.retrieveSalle(response.data.idSalle)
+    }).catch(e => {
+      console.log(e);
+    })
+    
+  }
+
+  retrieveLocalisation(idMateriel){
+    LocalisationDataService.findByIdMaterial(idMateriel)
+    .then(response => {
+      this.setState({
+        currentLocalisation: response.data
       })
+      console.log(response.data);
+    }).catch(e => {
+      console.log(e);
+    })
+  }
+
+  retrieveSalle(idSalle){
+    SalleDataService.get(idSalle)
+    .then(response => {
+      this.setState({
+        currentSalle: response.data
+      })
+      console.log(response.data)
+    }).catch(e => {
+      console.log(e);
+    })
+  }
+
+  retrieveType(idType){
+    TypeDataService.get(idType)
+    .then(response => {
+      this.setState({
+        currentType: response.data
+      })
+    }).catch(e => {
+      console.log(e);
     })
   }
 
@@ -71,7 +114,7 @@ export default class MaterielList extends Component {
   }
 
   render() {
-    const { materiels, currentMateriel, currentIndex, currentType } = this.state;
+    const { materiels, currentMateriel, currentIndex, currentType, currentSalle } = this.state;
 
     return (
       <div className="list row">
@@ -104,7 +147,7 @@ export default class MaterielList extends Component {
         <div className="col-md-6">
           {currentMateriel ? (
             <div>
-              <h4>Tutorial</h4>
+              <h4>Materiels</h4>
               <div>
                 <label>
                   <strong>idbadge:</strong>
@@ -123,11 +166,18 @@ export default class MaterielList extends Component {
                 </label>{" "}
                 {currentMateriel.nomMateriel}
               </div>
-                <div>
-                  <label>
-                    <strong>{currentType ? (currentType.nomType) : "not found"}</strong>
-                  </label>
-                </div>
+              <div>
+                <label>
+                  <strong>type:</strong>
+                  {currentType ? (currentType.nomType) : "not found"}
+                </label>
+              </div>
+              <div>
+                <label>
+                  <strong>salle:</strong>
+                  {currentSalle ? (currentSalle.nomSalle) : "not found"}
+                </label>
+              </div>
               )
 
               <Link
@@ -136,6 +186,7 @@ export default class MaterielList extends Component {
               >
                 Edit
               </Link>
+            
             </div>
           ) : (
             <div>

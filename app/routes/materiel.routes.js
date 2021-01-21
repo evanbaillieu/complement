@@ -1,6 +1,6 @@
 const { authJwt } = require("../middleware");
 const materiel = require("../controllers/materiel.controllers"); 
-var router = require("express").Router();
+const router = require("express").Router();
 
 router.get("/", [authJwt.verifyToken], materiel.findAll)
 

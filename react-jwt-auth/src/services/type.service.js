@@ -8,7 +8,7 @@ class TypeService {
         return axios.get(API_URL,)
     }
 
-    getbyid(id){
+    get(id){
         return axios.get(API_URL + `${id}`, { headers: authHeader() })
     }
 }
