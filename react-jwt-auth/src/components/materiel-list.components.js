@@ -11,7 +11,6 @@ export default class MaterielList extends Component {
     this.retrieveMateriels = this.retrieveMateriels.bind(this);
     this.refreshList = this.refreshList.bind(this);
     this.setActiveMateriel = this.setActiveMateriel.bind(this);
-    this.removeAllMateriels = this.removeAllMateriels.bind(this);
     this.retrieveLocalisation = this.retrieveLocalisation.bind(this);
     this.retrieveType = this.retrieveType.bind(this);
     this.retrieveSalle = this.retrieveSalle.bind(this);
@@ -102,17 +101,6 @@ export default class MaterielList extends Component {
     })
   }
 
-  removeAllMateriels() {
-    MaterielDataService.deleteAll()
-      .then(response => {
-        console.log(response.data);
-        this.refreshList();
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
-
   render() {
     const { materiels, currentMateriel, currentIndex, currentType, currentSalle } = this.state;
 
@@ -136,13 +124,10 @@ export default class MaterielList extends Component {
                 </li>
               ))}
           </ul>
-
-          <button
-            className="m-3 btn btn-sm btn-danger"
-            onClick={this.removeAllMateriels}
-          >
-            Remove All
-          </button>
+          
+          <Link to={"/materiel-add"} className="m-3 btn btn-sm btn-success" >
+                Add
+            </Link>
         </div>
         <div className="col-md-6">
           {currentMateriel ? (
@@ -153,6 +138,12 @@ export default class MaterielList extends Component {
                   <strong>idbadge:</strong>
                 </label>{" "}
                 {currentMateriel.idBadge}
+              </div>
+              <div>
+                <label>
+                  <strong>newdateControle:</strong>
+                </label>{" "}
+                {currentMateriel.newDateControle}
               </div>
               <div>
                 <label>
@@ -169,16 +160,15 @@ export default class MaterielList extends Component {
               <div>
                 <label>
                   <strong>type:</strong>
-                  {currentType ? (currentType.nomType) : "not found"}
-                </label>
+                </label> {" "}
+                {currentType ? (currentType.nomType) : "not found"}
               </div>
               <div>
                 <label>
                   <strong>salle:</strong>
-                  {currentSalle ? (currentSalle.nomSalle) : "not found"}
                 </label>
+                {currentSalle ? (currentSalle.nomSalle) : "not found"}
               </div>
-              )
 
               <Link
                 to={"/materiel/" + currentMateriel.id}

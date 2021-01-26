@@ -1,31 +1,31 @@
 import React, { Component } from "react";
-import TypeDataService from "../services/type.service"
+import LecteurDataService from "../services/lecteur.service"
 import { Link } from "react-router-dom";
 
-export default class TypeList extends Component {
+export default class LecteurList extends Component {
   constructor(props) {
     super(props);
-    this.retrieveType = this.retrieveType.bind(this);
+    this.retrieveLecteur = this.retrieveLecteur.bind(this);
     this.refreshList = this.refreshList.bind(this);
-    this.setActiveType = this.setActiveType.bind(this);
-    this.removeAllType = this.removeAllType.bind(this);
+    this.setActiveLecteur = this.setActiveLecteur.bind(this);
+    
 
     this.state = {
-      types: [],
-      currentType: null,
+      lecteurs: [],
+      currentLecteur: null,
       currentIndex: -1
     };
   }
 
   componentDidMount() {
-    this.retrieveType();
+    this.retrieveLecteur();
   }
 
-  retrieveType() {
-    TypeDataService.getAll()
+  retrieveLecteur() {
+    LecteurDataService.getAll()
       .then(response => {
         this.setState({
-          types: response.data
+          lecteurs: response.data
         });
         console.log(response.data);
       })
@@ -37,78 +37,74 @@ export default class TypeList extends Component {
   refreshList() {
     this.retrieveType();
     this.setState({
-      currentType: null,
+      currentLecteur: null,
       currentIndex: -1
     });
   }
 
-  setActiveType(type, index) {
+  setActiveLecteur(lecteur, index) {
     this.setState({
-      currentType: type,
+      currentLecteur: lecteur,
       currentIndex: index
     });
   }
 
-  removeAllType() {
-    TypeDataService.deleteAll()
-      .then(response => {
-        console.log(response.data);
-        this.refreshList();
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
 
   render() {
-    const { types , currentType, currentIndex } = this.state;
+    const { lecteurs , currentLecteur, currentIndex } = this.state;
 
     return (
       <div className="list row">
         <div className="col-md-6">
-          <h4>Materiels List</h4>
+          <h4>Lecteur List</h4>
 
           <ul className="list-group">
-            {types &&
-              types.map((type, index) => (
+            {lecteurs &&
+              lecteurs.map((lecteur, index) => (
                 <li
                   className={
                     "list-group-item " +
                     (index === currentIndex ? "active" : "")
                   }
-                  onClick={() => this.setActiveType(type, index)}
+                  onClick={() => this.setActiveLecteur(lecteur, index)}
                   key={index}
                 >
-                  {type.nomType}
+                  {lecteur.ip}
                 </li>
               ))}
           </ul>
 
-            <Link to={"/type-add"} className="m-3 btn btn-sm btn-success" >
+            <Link to={"/lecteur-add"} className="m-3 btn btn-sm btn-success" >
                 Add
             </Link>
           
         </div>
         <div className="col-md-6">
-          {currentType ? (
+          {currentLecteur ? (
             <div>
-              <h4>Type</h4>
+              <h4>lecteur</h4>
               <div>
                 <label>
-                  <strong>nomType:</strong>
+                  <strong>ip:</strong>
                 </label>{" "}
-                {currentType.nomType}
+                {currentLecteur.ip}
               </div>
               <div>
                 <label>
-                  <strong>nomimage :</strong>
+                  <strong>modele :</strong>
                 </label>{" "}
-                {currentType.nomimage}
+                {currentLecteur.modele}
               </div>
-              )
+              <div>
+                <label>
+                  <strong>etatOn :</strong>
+                </label>{" "}
+                {(currentLecteur.etatOn === 1)? "Alummer" : "Eteindre" }
+              </div>
+              
 
               <Link
-                to={"/type/" + currentType.id}
+                to={"/materiel/" + currentLecteur.id}
                 className="badge badge-warning"
               >
                 Edit
