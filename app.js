@@ -22,9 +22,12 @@ module.exports = app => {
     const materialroutes = require('./app/routes/materiel.routes')
     app.use('/api/materiel', materialroutes);
 
+    const lecteurroutes = require('./app/routes/lecteur.routes')
+    app.use('/api/lecteur', lecteurroutes);
+
     const localisationroutes = require('./app/routes/localisation.routes')
     app.use('/api/localisation', localisationroutes);
 
-    const typeroutes = require('./app/routes/type.routes')
+    const typeroutes = require('./app/routes/type.routes');
     app.use('/api/type', typeroutes);
 }

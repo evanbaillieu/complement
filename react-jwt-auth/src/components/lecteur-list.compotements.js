@@ -104,7 +104,7 @@ export default class LecteurList extends Component {
               
 
               <Link
-                to={"/materiel/" + currentLecteur.id}
+                to={"/lecteur/" + currentLecteur.id}
                 className="badge badge-warning"
               >
                 Edit

@@ -12,6 +12,14 @@ import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component"
 import MaterielList from "./components/materiel-list.components"
+import AddMateriel from "./components/materiel-add.component"
+import TypeList from "./components/type-list.compotements"
+import TypeAdd from "./components/type-add.component"
+import LecteurList from "./components/lecteur-list.compotements"
+import AddLecteur from "./components/lecteur-add.component"
+import Materiel from "./components/materiel.compotements"
+import Type from "./components/type.compotements"
+import Lecteur from "./components/lecteur.compotements"
 
 class App extends Component {
   constructor(props) {
@@ -48,7 +56,7 @@ class App extends Component {
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
-            localization materiels
+            localisation materiels
           </Link>
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
@@ -57,6 +65,18 @@ class App extends Component {
                 </Link>
             </li>
 
+            <li className="nav-item">
+                <Link to={"/type-list"} className="nav-link">
+                type-list
+              </Link>
+            </li> 
+
+            <li className="nav-item">
+              <Link to={"/lecteur-list"} className="nav-link">
+                lecteur-list
+              </Link>
+            </li>
+            
             {showModeratorBoard && (
               <li className="nav-item">
                 <Link to={"/mod"} className="nav-link">
@@ -121,6 +141,14 @@ class App extends Component {
             <Route path="/user" component={BoardUser} />
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
+            <Route path="/type-list" component={TypeList} />
+            <Route path="/materiel-add" component={AddMateriel} />
+            <Route path="/type-add" component={TypeAdd} />
+            <Route path="/lecteur-list" component={LecteurList} />
+            <Route path="/lecteur-add" component={AddLecteur} />
+            <Route path="/materiel/:id" component={Materiel} />
+            <Route path="/type/:id" component={Type} />
+            <Route path="/lecteur/:id" component={Lecteur} />
           </Switch>
         </div>
       </div>

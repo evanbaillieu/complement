@@ -1,16 +1,26 @@
-import axios from 'axios';
-import authHeader from './auth-header';
-
-const API_URL = 'http://localhost:3002/api/type/';
+import http from "../http-common";
 
 class TypeService {
-    getALl(){
-        return axios.get(API_URL,)
+    getAll(){
+        return http.get("/type")
     }
 
     get(id){
-        return axios.get(API_URL + `${id}`, { headers: authHeader() })
+        return http.get(`/type/${id}`)
+    }
+
+    create(data){
+        return http.post("/type", data )
+    }
+
+    update(id, data) {
+        return http.put(`/type/${id}`, data);
+    }
+
+    delete(id) {
+        return http.delete(`/type/${id}`);
     }
 }
+
 
 export default new TypeService();

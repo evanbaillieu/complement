@@ -8,9 +8,10 @@ router.get("/:id", materiel.findOne)
 
 router.post("/", materiel.create)
 
-router.delete("/:id", materiel.delete)
+router.put("/:id", [authJwt.verifyToken], materiel.update)
 
-router.delete("/", materiel.deleteAll)
+router.delete("/:id", [authJwt.verifyToken], materiel.delete)
+
 
 
 module.exports = router;

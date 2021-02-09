@@ -1,24 +1,30 @@
-import axios from 'axios';
-import authHeader from './auth-header';
-
-const API_URL = "http://localhost:3002/api/materiel";
+import http from "../http-common";
 
 class MaterielService {
     getAll(){
-        return axios.get(API_URL, { headers: authHeader() })
+        return http.get("/materiel")
     }
 
     get(id){
-        return axios.get(API_URL + `/${id}`, { headers: authHeader() })
+        return http.get(`/materiel/${id}`)
     }
 
     create(data){
-        return axios.post(API_URL, data, { headers: authHeader()})
+        return http.post("/materiel", data )
+    }
+    
+    update(id, data) {
+        return http.put(`/materiel/${id}`, data);
+    }
+
+    delete(id) {
+        return http.delete(`/materiel/${id}`);
     }
 
     findBynomMaterial(nomMateriel){
-        return axios.get(API_URL + `?nomMateriel=${nomMateriel}`)
+        return http.get(`/materiel?nomMateriel=${nomMateriel}`)
     }
 }
+
 
 export default new MaterielService();

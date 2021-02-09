@@ -11,16 +11,21 @@ exports.create = (req, res) => {
       });
       return;
     }
-  
+    const date = new Date();
+     //
+    const dateControle = date.getFullYear() + "-"+ (date.getMonth() + 1) + "-" + date.getDay()
+    const newDateControle = (date.getFullYear() + 1) + "-"+ (date.getMonth() + 1) + "-" + date.getDay()
+    console.log(dateControle);
+    console.log(newDateControle)
     // Create a Tutorial
     const materiel = {
       idBadge: req.body.idBadge,
-      dateControle: req.body.dateControle,
-      newDateControle: req.body.newDateControle,
+      dateControle: dateControle,
+      newDateControle: newDateControle,
       nomMateriel: req.body.nomMateriel,
       idType: req.body.idType
     };
-  
+    console.log(materiel);
     // Save Tutorial in the database
     Materiel.create(materiel)
       .then(data => {
@@ -67,24 +72,38 @@ exports.findOne = (req, res) => {
 
   exports.update = (req, res) => {
     const id = req.params.id;
+    
+    const date = new Date();
+    const dateControle = date.getFullYear() + "-"+ (date.getMonth() + 1) + "-" + date.getDay()
+    const newDateControle = (date.getFullYear() + 1) + "-"+ (date.getMonth() + 1) + "-" + date.getDay()
+    console.log(dateControle);
+    console.log(newDateControle)
+    // Create a Tutorial
+    const materiel = {
+      idBadge: req.body.idBadge,
+      dateControle: dateControle,
+      newDateControle: newDateControle,
+      nomMateriel: req.body.nomMateriel,
+      idType: req.body.idType
+    };
   
-    Materiel.update(req.body, {
+    Materiel.update(materiel, {
       where: { id: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was updated successfully."
+            message: "Materiel was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+            message: `Cannot update Materiel with id=${id}. Maybe Materiel was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Tutorial with id=" + id
+          message: "Error updating Materiel with id=" + id
         });
       });
   };
