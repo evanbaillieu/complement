@@ -53,7 +53,7 @@ export default class Type extends Component {
     LecteurDataService.get(id)
       .then(response => {
         this.setState({
-            currentType: response.data
+            currentLecteur: response.data
         });
         console.log(response.data);
       })
